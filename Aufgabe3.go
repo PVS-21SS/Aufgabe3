@@ -7,20 +7,20 @@ type Colour int
 type Axis int
 
 const (
-	North Direction = iota
-	East
-	South
-	West
+	North Direction = 0
+	East            = 1
+	South           = 2
+	West            = 3
 )
 
 const (
-	Red Colour = iota
+	Red Colour = 0
 	Yellow
 	Green
 )
 
 const (
-	NS Axis = iota
+	NS Axis = 0
 	EW
 )
 
@@ -39,34 +39,85 @@ func (c Colour) String() string {
 	}
 	return col[c]
 }
+func (a Axis) String() string {
+	axis := []string{"NorthSouth", "EastWest"}
+	if int(a) >= cap(axis) {
+		a = Axis(int(a) - cap(axis))
+	}
+	return axis[a]
+}
 
-func dnext(d Direction) (Direction) {
+func (d Direction) next() Direction {
 	return d + 1
 }
 
-func dopposite(d Direction) Direction {
+func (d Direction) opposite() Direction {
 	return d + 2
 }
-func dmax(d Direction) Direction {
-	return d
+func (d Direction) whichAxis() Axis {
+	return Axis(int(d % 2))
 }
 
-func cnext(c Colour) Colour {
+func directions() int {
+	var d = Direction(0)
+	var dcpy = d
+	var cnt = 1
+	for {
+		d = d.next()
+		if d.String() == dcpy.String() {
+			break
+		}
+		cnt++
+	}
+	return cnt
+}
+
+func (c Colour) next() Colour {
 	return c + 1
 }
-func anext(a Axis) Axis {
+
+func (a Axis) next() Axis {
 	return a + 1
 }
 
+type TrafficLight struct {
+	dir Direction
+	col Colour
+	ax Axis
+}
+func (t TrafficLight) String() string {
+	var s = "["+t.dir.String() + ": "+ t.col.String()+ "]"
+	return s
+}
+
 func main() {
-	var d = North
-	var c = Green
+	var d = Direction(0)
+	var c = Colour(0)
+	var cnt = directions()
 
-	fmt.Println("Start:\t\t", c)
-	fmt.Println("Next:\t\t", cnext(c))
-	fmt.Println("---------------")
-	fmt.Println("Start:\t\t", d)
+	fmt.Println("First Direction: \t\t", d)
+	fmt.Println("Next direction: \t\t", d.next())
+	fmt.Println( "opposite direction: \t", d.opposite())
+	fmt.Println("Axis: \t\t\t\t\t", d.whichAxis(), )
 
-	fmt.Println("Next:\t\t", dnext(d))
-	fmt.Println("Opposite:\t", dopposite(d))
+	fmt.Println()
+
+	fmt.Println("First Colour:\t\t\t", c)
+	fmt.Println("Next Colour:\t\t\t", c.next())
+
+
+	fmt.Println("Count directions:\t\t", cnt)
+
+	fmt.Println()
+
+	t := []TrafficLight{}
+	for i := 0; i < cnt; i++{
+		t = append(t, TrafficLight{
+			dir: d,
+			col: c,
+			ax: d.whichAxis(),})
+		d = d.next()
+	}
+	fmt.Println(t)
+
 }
