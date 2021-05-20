@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	var testing = true
+	var testing = false
 
 	if testing {
 		proof()
@@ -20,6 +20,11 @@ func main() {
 				ax:  d.whichAxis()})
 			d = d.next()
 			fmt.Println(t[i].String())
+		}
+		fmt.Println("-----------------------")
+
+		for i := 0; i < cnt; i++ {
+			t[i].run()
 		}
 
 		// logik zum schalten
