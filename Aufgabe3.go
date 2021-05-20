@@ -1,3 +1,4 @@
+//go build -race
 package main
 
 import (
@@ -6,32 +7,26 @@ import (
 )
 
 func main() {
-	var testing = false
+	var d = Direction(0)
+	var c = Colour(0)
+	var cnt = directionCounter()
 
-	if testing {
-		proof()
-	} else {
-		var d = Direction(0)
-		var c = Colour(0)
-		var cnt = directionCounter()
+	axChan := make(chan Colour)
+	allAxChan := make(chan Axis)
 
-		t := []TrafficLight{}
-		for i := 0; i < cnt; i++ {
-			t = append(t, TrafficLight{
-				dir: d,
-				col: c,
-				ax:  d.whichAxis()})
-			d = d.next()
-			fmt.Println(t[i].String())
-		}
-		fmt.Println("-----------------------")
-
-
-		for i := 0; i < cnt; i++ {
-			go t[i].run(Axis(0))
-		}
-		time.Sleep(time.Second * 1)
-
-		// logik zum schalten
+	t := []TrafficLight{}
+	for i := 0; i < cnt; i++ {
+		t = append(t, TrafficLight{
+			dir: d,
+			col: c,
+			ax:  d.whichAxis()})
+		d = d.next()
+		fmt.Println(t[i].String())
 	}
+	fmt.Println()
+
+	for i := 0; i < cnt; i++ {
+		go t[i].run(Axis(0), axChan,allAxChan)
+	}
+	time.Sleep(time.Millisecond * 1)
 }

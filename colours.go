@@ -18,3 +18,16 @@ func (c Colour) next() Colour {
 	}
 	return 0
 }
+func colourCounter() int {
+	var c = Colour(0)
+	var ccpy = c
+	var cnt = 1
+	for {
+		c = c.next()
+		if c.String() == ccpy.String() {
+			break
+		}
+		cnt++
+	}
+	return cnt
+}
