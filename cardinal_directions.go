@@ -3,10 +3,10 @@ package main
 type Direction int
 
 const (
-	North Direction = 0
-	East            = 1
-	South           = 2
-	West            = 3
+	North Direction = iota
+	East
+	South
+	West
 )
 
 func (d Direction) String() string {
@@ -18,7 +18,10 @@ func (d Direction) String() string {
 }
 
 func (d Direction) next() Direction {
-	return d + 1
+	if d < 3 {
+		return d + 1
+	}
+	return 0
 }
 
 func (d Direction) opposite() Direction {

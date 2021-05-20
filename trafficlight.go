@@ -9,13 +9,15 @@ type TrafficLight struct {
 }
 
 func (t TrafficLight) String() string {
-	var s = t.dir.String() + ": " + t.col.String()
-	return s
+	return t.dir.String() + ": " + t.col.String()
 }
-func (t TrafficLight) run() {
-	for {
-		fmt.Println(t.String())
 
-		t.col = t.col.next()
+func (t TrafficLight) run(startAx Axis) {
+
+	for i := 0; i < 3; i++ {
+		if t.ax == startAx {
+			t.col = t.col.next()
+			fmt.Println(t.String())
+		}
 	}
 }

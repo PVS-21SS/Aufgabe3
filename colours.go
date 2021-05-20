@@ -3,18 +3,18 @@ package main
 type Colour int
 
 const (
-	Red Colour = 0
+	Red Colour = iota
 	Yellow
 	Green
 )
 
 func (c Colour) String() string {
 	col := []string{"Red", "Yellow", "Green"}
-	if int(c) >= cap(col) {
-		c = Colour(int(c) - cap(col))
-	}
 	return col[c]
 }
 func (c Colour) next() Colour {
-	return c + 1
+	if c < 2 {
+		return c+1
+	}
+	return 0
 }

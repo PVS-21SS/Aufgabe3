@@ -3,7 +3,7 @@ package main
 type Axis int
 
 const (
-	NS Axis = 0
+	NS Axis = iota
 	EW
 )
 
