@@ -28,7 +28,7 @@ func (d Direction) whichAxis() Axis {
 	return Axis(int(d % 2))
 }
 
-func directions() int {
+func directionCounter() int {
 	var d = Direction(0)
 	var dcpy = d
 	var cnt = 1

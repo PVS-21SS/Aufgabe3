@@ -3,14 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	var testing = false
+	var testing = true
 
 	if testing {
 		proof()
 	} else {
 		var d = Direction(0)
 		var c = Colour(0)
-		var cnt = directions()
+		var cnt = directionCounter()
 
 		t := []TrafficLight{}
 		for i := 0; i < cnt; i++ {
