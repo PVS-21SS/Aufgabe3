@@ -15,20 +15,27 @@ func (t TrafficLight) String() string {
 }
 
 func (t TrafficLight) run(startAx Axis, axChan chan Colour, allAxChan chan Axis) {
-	var cnt = colourCounter()
+	var currentAx = startAx
 	for {
-		if startAx == t.ax {
+		if currentAx == t.ax {
 			select {
 			case tcol := <-axChan:
 				fmt.Println(t.String())
-				fmt.Println("----------------------")
 				t.col = tcol
-				if tcol == Colour(cnt) {
-				}
+
 			default:
 				fmt.Println(t.String())
 				t.col = t.col.next()
 				axChan <- t.col
+			}
+			if t.col == Colour(0) {
+				currentAx = currentAx.next()
+				select {
+				case msgAx := <-allAxChan:
+					currentAx = msgAx
+				default:
+					allAxChan <- currentAx
+				}
 			}
 		}
 	}

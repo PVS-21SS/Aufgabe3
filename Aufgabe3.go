@@ -25,8 +25,9 @@ func main() {
 	}
 	fmt.Println()
 
+
 	for i := 0; i < cnt; i++ {
 		go t[i].run(Axis(0), axChan,allAxChan)
 	}
-	time.Sleep(time.Millisecond * 1)
+	time.Sleep(time.Millisecond * 100)
 }
