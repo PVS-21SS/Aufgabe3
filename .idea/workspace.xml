@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcd8e637-688e-42c5-84a8-e534f329ff2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cardinal_directions.go" beforeDir="false" afterPath="$PROJECT_DIR$/cardinal_directions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trafficlight.go" beforeDir="false" afterPath="$PROJECT_DIR$/trafficlight.go" afterDir="false" />
+    </list>
+    <list id="1b75cfb7-ff9e-44a1-96d8-d117a7380f19" name="Changes by Ununoctium" comment="">
       <change beforePath="$PROJECT_DIR$/cardinal_directions.go" beforeDir="false" afterPath="$PROJECT_DIR$/cardinal_directions.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +32,14 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/cardinal_directions.go">
+      <ranges>
+        <range start1="22" end1="22" start2="22" end2="23" changelist="fcd8e637-688e-42c5-84a8-e534f329ff2f" />
+        <range start1="30" end1="30" start2="31" end2="32" changelist="1b75cfb7-ff9e-44a1-96d8-d117a7380f19" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="1sRbPVxFPFPBc7pbB2iBIXgJrX0" />
   <component name="ProjectViewState">

@@ -20,6 +20,7 @@ func (d Direction) next() Direction {
 func (d Direction) opposite() Direction {
 	return d + Direction(directionCounter()/2)
 }
+
 func (d Direction) whichAxis() Axis {
 	return Axis(d % 2)
 }
@@ -28,6 +29,7 @@ func directionCounter() int {
 	var d = Direction(0)
 	var dcpy = d
 	var cnt = 1
+
 	for {
 		d = d + 1
 		if d.String() == dcpy.String() {
