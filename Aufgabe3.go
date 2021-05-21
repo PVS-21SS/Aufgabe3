@@ -6,11 +6,27 @@ import (
 	"time"
 )
 
+// helper Function
+// to print coloured Text and try to use Maps
+func printColouredMessage(colour string, msg string) {
+	colours := map[string]string{
+		"Red" : "\033[31m",
+		"Yellow" : "\033[32m",
+		"Green" : "\033[33m",
+		"Blue" : "\033[34m",
+		"Purple" : "\033[35m",
+		"Cyan" : "\033[36m",
+		"White" : "\033[37m",
+		"Reset" : "\033[0m",
+	}
+	fmt.Println(colours[colour] + msg + "\033[0m")
+}
+
+
 func main() {
 	var d = Direction(0)
 	var c = Colour(0)
 	var cnt = directionCounter()
-
 
 	// Channel for the Colour, to sync the to TrafficLights of an Axis
 	axChanColour := make(chan Colour)
@@ -21,6 +37,8 @@ func main() {
 	quitChannel := make(chan bool)
 
 	// initialisation of the TrafficLights
+	printColouredMessage("Blue", "\nInitialisation!\n")
+
 	var t []TrafficLight
 	// cnt is the Counter for the directions
 	for i := 0; i < cnt; i++ {
@@ -33,11 +51,12 @@ func main() {
 		// initial print of the TrafficLights
 		fmt.Println(t[i].printInColour())
 	}
-	fmt.Println()
 
 	// setting the Starting Axis, 0 means North and South
 	// 1 would be East and West
 	axisDirectionChan <- Axis(0)
+
+	printColouredMessage("Blue", "\nStarting the Intersection!\n")
 
 	// starting all trafficLights in their own Thread
 	for i := 0; i < cnt; i++ {
@@ -45,9 +64,13 @@ func main() {
 	}
 	// wait a while to Show the TrafficLights are working
 	time.Sleep(time.Millisecond * 10)
-	// Stop all goroutines
-	quitChannel <- true
-	// wait fot the goroutines to be done
-	<- quitChannel
 
+	// Stop all goroutines
+	printColouredMessage("Blue", "\nStopping the Intersection\n")
+	quitChannel <- true
+
+	// wait fot the goroutines to be done
+	printColouredMessage("Blue", "Waiting for the TrafficLights to Stop!")
+	<- quitChannel
+	printColouredMessage("Blue", "Intersection Stopped!")
 }
