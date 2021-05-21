@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcd8e637-688e-42c5-84a8-e534f329ff2f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/axis.go" beforeDir="false" afterPath="$PROJECT_DIR$/axis.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cardinal_directions.go" beforeDir="false" afterPath="$PROJECT_DIR$/cardinal_directions.go" afterDir="false" />
-    </list>
-    <list id="766aca99-7e1b-4ee4-aae0-9a65379e15b7" name="Changes by Ununoctium" comment="">
-      <change beforePath="$PROJECT_DIR$/trafficlight.go" beforeDir="false" afterPath="$PROJECT_DIR$/trafficlight.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

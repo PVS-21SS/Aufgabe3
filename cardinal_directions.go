@@ -29,7 +29,7 @@ func directionCounter() int {
 	var dcpy = d
 	var cnt = 1
 	for {
-		d = d+1
+		d = d + 1
 		if d.String() == dcpy.String() {
 			break
 		}
