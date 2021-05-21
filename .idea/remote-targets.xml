@@ -4,7 +4,7 @@
     <targets>
       <target name="WSL - Ubuntu-20.04" type="wsl">
         <config>
-          <option name="distributionMsId" value="Ubuntu-20.04" />
+          <option name="distributionMsId" value="Ubuntu" />
           <option name="projectRootOnTarget" value="/mnt/c/Users/Phili/AppData/Local/JetBrains/Toolbox/apps/Goland/ch-0/211.7142.13/jbr/bin&#10;/Aufgabe3" />
         </config>
         <ContributedStateBase type="GoLanguageRuntime">

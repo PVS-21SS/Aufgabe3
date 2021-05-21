@@ -14,30 +14,31 @@ func (t TrafficLight) String() string {
 	return t.dir.String() + ": " + t.col.String()
 }
 
-func (t TrafficLight) run(axChan chan Colour, allAxChan chan Axis) {
-
+func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis) {
 	for {
-		currentAx := <- allAxChan
-		allAxChan <- currentAx
-		if currentAx == t.ax {
-			//fmt.Println(t.ax, t.String())
-			fmt.Println(t.String())
+		switch currentAx := <-axisDirectionChan; {
+		case currentAx == t.ax:
+			fmt.Println(t.col.printInColour(t))
 			select {
 
-			case tcol := <-axChan:
-				fmt.Println("------------")
+			case tcol := <-axChanColour:
+				//fmt.Println(t.String())
 				t.col = tcol
+				if t.col == Colour(0) {
+					currentAx = currentAx.next()
+				}
+				axisDirectionChan <- currentAx
 
 			default:
 				t.col = t.col.next()
-				axChan <- t.col
+				axisDirectionChan <- currentAx
+				axChanColour <- t.col
+				//fmt.Println(t.String())
 			}
 
-			if t.col == Colour(0) {
-				//fmt.Println(t.String())
-				currentAx = currentAx.next()
-				allAxChan <- currentAx
-			}
+		default:
+			axisDirectionChan <- currentAx
 		}
+
 	}
 }

@@ -22,7 +22,7 @@ func main() {
 			col: c,
 			ax:  d.whichAxis()})
 		d = d.next()
-		fmt.Println(t[i].String())
+		fmt.Println(t[i].col.printInColour(t[i]))
 	}
 	fmt.Println()
 
