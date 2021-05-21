@@ -2,11 +2,6 @@ package main
 
 type Colour int
 
-const (
-	Red Colour = iota
-	Yellow
-	Green
-)
 
 // toString to Print the TrafficLight with the Colour Name
 func (c Colour) String() string {
