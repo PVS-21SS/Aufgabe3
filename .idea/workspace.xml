@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcd8e637-688e-42c5-84a8-e534f329ff2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/remote-targets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remote-targets.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe3.go" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe3.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/axis.go" beforeDir="false" afterPath="$PROJECT_DIR$/axis.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cardinal_directions.go" beforeDir="false" afterPath="$PROJECT_DIR$/cardinal_directions.go" afterDir="false" />
     </list>
-    <list id="766aca99-7e1b-4ee4-aae0-9a65379e15b7" name="Changes by Ununoctium" comment="" />
+    <list id="766aca99-7e1b-4ee4-aae0-9a65379e15b7" name="Changes by Ununoctium" comment="">
+      <change beforePath="$PROJECT_DIR$/trafficlight.go" beforeDir="false" afterPath="$PROJECT_DIR$/trafficlight.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,7 +21,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.16.4" />
+  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.16" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -57,9 +59,18 @@
       <recent name="F:\Programmierkram\HS\PVS\Aufgabe3" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build Aufgabe3/">
+  <component name="RunManager">
     <configuration name="go build Aufgabe3/" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="Aufgabe3" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/Aufgabe3.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build Aufgabe3/" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="Aufgabe3" />
+      <target name="WSL - Ubuntu-20.04" />
       <working_directory value="$PROJECT_DIR$" />
       <go_parameters value="-i" />
       <kind value="DIRECTORY" />
@@ -67,33 +78,6 @@
       <filePath value="$PROJECT_DIR$/../Aufgabe3|$PROJECT_DIR$/test.go" />
       <method v="2" />
     </configuration>
-    <configuration name="go build Aufgabe3.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="Aufgabe3" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/Aufgabe3.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build PingPong.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="Aufgabe3" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/PingPong.go" />
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Go Build.go build Aufgabe3/" />
-      <item itemvalue="Go Build.go build Aufgabe3.go" />
-      <item itemvalue="Go Build.go build PingPong.go" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Build.go build Aufgabe3.go" />
-        <item itemvalue="Go Build.go build PingPong.go" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,5 +93,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

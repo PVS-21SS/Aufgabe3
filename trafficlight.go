@@ -25,8 +25,7 @@ func (t TrafficLight) String() string {
 
 // print TrafficLight and Colour in ANSI Colours
 func (t TrafficLight) printInColour() string {
-	//col := []string{"Red", "Yellow", "Green"}
-	colour := []string{"\033[31m", "\033[32m", "\033[33m"}
+	colour := []string{"\033[31m", "\033[33m", "\033[32m"}
 	var retString = colour[t.col] + t.dir.String() + ": " + t.col.String()
 	return retString
 }
