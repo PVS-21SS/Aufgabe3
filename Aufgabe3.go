@@ -39,7 +39,7 @@ func main() {
 	// initialisation of the TrafficLights
 	printColouredMessage("Blue", "\nInitialisation!\n")
 
-	var t []TrafficLight
+	var t =  []TrafficLight{}
 	// cnt is the Counter for the directions
 	for i := 0; i < cnt; i++ {
 		// every TrafficLight, gets a Direction, a Colour and a Axis
