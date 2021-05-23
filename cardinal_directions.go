@@ -2,6 +2,7 @@ package main
 
 type Direction int
 
+// toString to Print the Direction and to define which directions exist
 func (d Direction) String() string {
 	dir := []string{"North", "East", "South", "West"}
 	if int(d) >= cap(dir) {
@@ -10,6 +11,7 @@ func (d Direction) String() string {
 	return dir[d]
 }
 
+// Next direction Function, based on the Index
 func (d Direction) next() Direction {
 	if d < Direction(directionCounter()-1) {
 		return d + 1
@@ -17,14 +19,17 @@ func (d Direction) next() Direction {
 	return 0
 }
 
+// what is the opposite direction of the input
 func (d Direction) opposite() Direction {
 	return d + Direction(directionCounter()/2)
 }
 
+// which axis is my input on
 func (d Direction) whichAxis() Axis {
 	return Axis(d % 2)
 }
 
+// counts the directions by iterating the String Array
 func directionCounter() int {
 	var d = Direction(0)
 	var dcpy = d
