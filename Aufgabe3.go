@@ -1,4 +1,3 @@
-//go build -race
 package main
 
 import (
@@ -49,7 +48,7 @@ func main() {
 			ax:  d.whichAxis()})
 		d = d.next()
 		// initial print of the TrafficLights
-		fmt.Println(t[i].printInColour())
+		//fmt.Println(t[i].printInColour())
 	}
 
 	// setting the Starting Axis, 0 means North and South

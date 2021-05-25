@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 // TrafficLight
 /*
@@ -33,6 +31,7 @@ func (t TrafficLight) printInColour() string {
 }
 
 func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis, quitChannel chan bool) {
+	fmt.Println(t.printInColour())
 	for {
 		select {
 		default:
@@ -41,7 +40,7 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 
 			//  Check if TrafficLight is Part of Axis
 			case currentAx == t.ax:
-				fmt.Println(t.printInColour())
+				//fmt.Println(t.printInColour())
 				select {
 
 				// if axChanColour has a Value, run this Code
@@ -49,7 +48,7 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 
 					// change the own Colour to the one of axChanColour
 					t.col = tcol
-
+					fmt.Println(t.printInColour())
 					// if the Colour is Red, write the next Axis to the currentAxis Variable
 					if t.col == Colour(0) {
 						currentAx = currentAx.next()
@@ -61,6 +60,7 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 				// if axChan has no Value, write the next Colour to the TrafficLight and to the axChanColour Channel
 				default:
 					t.col = t.col.next()
+					fmt.Println(t.printInColour())
 					axisDirectionChan <- currentAx
 					axChanColour <- t.col
 				}

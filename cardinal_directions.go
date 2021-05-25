@@ -32,12 +32,12 @@ func (d Direction) whichAxis() Axis {
 // counts the directions by iterating the String Array
 func directionCounter() int {
 	var d = Direction(0)
-	var dcpy = d
+	var dCpy = d
 	var cnt = 1
 
 	for {
 		d = d + 1
-		if d.String() == dcpy.String() {
+		if d.String() == dCpy.String() {
 			break
 		}
 		cnt++
