@@ -4,7 +4,11 @@
     <list default="true" id="fcd8e637-688e-42c5-84a8-e534f329ff2f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Aufgabe3.go" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe3.go" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/cardinal_directions.go" beforeDir="false" afterPath="$PROJECT_DIR$/cardinal_directions.go" afterDir="false" />
+>>>>>>> 6042b22facf6d0103bf358b0aab54e26dc422457
       <change beforePath="$PROJECT_DIR$/trafficlight.go" beforeDir="false" afterPath="$PROJECT_DIR$/trafficlight.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
