@@ -31,15 +31,11 @@ func (t TrafficLight) printInColour() string {
 }
 
 func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis, quitChannel chan bool) {
-<<<<<<< HEAD
 	thisAX := <- axisDirectionChan
 	if thisAX != t.ax {
 		fmt.Println(t.printInColour())
 	}
 	axisDirectionChan <- thisAX
-=======
-	fmt.Println(t.printInColour())
->>>>>>> 6042b22facf6d0103bf358b0aab54e26dc422457
 	for {
 		select {
 		default:
