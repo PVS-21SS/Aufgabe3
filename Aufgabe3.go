@@ -37,8 +37,6 @@ func main() {
 	quitChannel := make(chan bool)
 
 	// initialisation of the TrafficLights
-	printColouredMessage("Blue", "\nInitialisation!\n")
-
 	var t =  []TrafficLight{}
 	// cnt is the Counter for the directions
 	for i := 0; i < cnt; i++ {
@@ -48,8 +46,6 @@ func main() {
 			col: c,
 			ax:  d.whichAxis()})
 		d = d.next()
-		// initial print of the TrafficLights
-		fmt.Println(t[i].printInColour())
 	}
 
 	// setting the Starting Axis, 0 means North and South
@@ -63,14 +59,12 @@ func main() {
 		go t[i].run(axChanColour, axisDirectionChan, quitChannel)
 	}
 	// wait a while to Show the TrafficLights are working
-	time.Sleep(time.Millisecond * 10)
+	time.Sleep(time.Millisecond * 1)
 
 	// Stop all goroutines
-	printColouredMessage("Blue", "\nStopping the Intersection\n")
 	quitChannel <- true
 
 	// wait fot the goroutines to be done
-	printColouredMessage("Blue", "Waiting for the TrafficLights to Stop!")
 	<- quitChannel
 	printColouredMessage("Blue", "Intersection Stopped!")
 }

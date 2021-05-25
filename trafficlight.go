@@ -33,6 +33,11 @@ func (t TrafficLight) printInColour() string {
 }
 
 func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis, quitChannel chan bool) {
+	thisAX := <- axisDirectionChan
+	if thisAX != t.ax {
+		fmt.Println(t.printInColour())
+	}
+	axisDirectionChan <- thisAX
 	for {
 		select {
 		default:
