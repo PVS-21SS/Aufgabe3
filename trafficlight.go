@@ -45,7 +45,6 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 
 				// if axChanColour has a Value, run this Code
 				case tcol := <-axChanColour:
-
 					// change the own Colour to the one of axChanColour
 					t.col = tcol
 					// if the Colour is Red, write the next Axis to the currentAxis Variable
@@ -54,20 +53,20 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 					}
 
 					// write the currentAxis to the Channel
+					fmt.Println(t.printInColour())
 					axisDirectionChan <- currentAx
 
 				// if axChan has no Value, write the next Colour to the TrafficLight and to the axChanColour Channel
 				default:
 					t.col = t.col.next()
+					fmt.Println(t.printInColour())
 					axisDirectionChan <- currentAx
 					axChanColour <- t.col
 				}
-				fmt.Println(t.printInColour())
 
 			default:
 				// if TrafficLight is not Part of the Axis, it returns the Axis into the Channel
 				axisDirectionChan <- currentAx
-
 			}
 
 		case <-quitChannel:
