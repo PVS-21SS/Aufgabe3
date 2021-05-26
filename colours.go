@@ -5,7 +5,7 @@ type Colour int
 
 // toString to Print the TrafficLight with the Colour Name
 func (c Colour) String() string {
-	col := []string{"Red", "Yellow", "Green"}
+	col := []string{"Red", "Green", "Yellow"}
 	return col[c]
 }
 

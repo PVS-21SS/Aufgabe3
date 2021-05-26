@@ -23,7 +23,7 @@ func (t TrafficLight) String() string {
 
 // print TrafficLight and Colour in ANSI Colours
 func (t TrafficLight) printInColour() string {
-	colour := []string{"\033[31m", "\033[33m", "\033[32m"}
+	colour := []string{"\033[31m", "\033[32m", "\033[33m"}
 
 	var retString = colour[t.col] + t.dir.String() + ": " + t.col.String()
 
@@ -31,11 +31,7 @@ func (t TrafficLight) printInColour() string {
 }
 
 func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis, quitChannel chan bool) {
-	thisAX := <- axisDirectionChan
-	if thisAX != t.ax {
-		fmt.Println(t.printInColour())
-	}
-	axisDirectionChan <- thisAX
+	fmt.Println(t.printInColour())
 	for {
 		select {
 		default:
@@ -44,7 +40,7 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 
 			//  Check if TrafficLight is Part of Axis
 			case currentAx == t.ax:
-				fmt.Println(t.printInColour())
+				//fmt.Println(t.printInColour())
 				select {
 
 				// if axChanColour has a Value, run this Code
@@ -66,10 +62,12 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 					axisDirectionChan <- currentAx
 					axChanColour <- t.col
 				}
+				fmt.Println(t.printInColour())
 
 			default:
 				// if TrafficLight is not Part of the Axis, it returns the Axis into the Channel
 				axisDirectionChan <- currentAx
+
 			}
 
 		case <-quitChannel:

@@ -19,11 +19,6 @@ func (d Direction) next() Direction {
 	return 0
 }
 
-// what is the opposite direction of the input
-func (d Direction) opposite() Direction {
-	return d + Direction(directionCounter()/2)
-}
-
 // which axis is my input on
 func (d Direction) whichAxis() Axis {
 	return Axis(d % 2)

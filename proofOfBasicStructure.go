@@ -9,7 +9,7 @@ func proof(){
 
 	fmt.Println("First Direction: \t\t", d)
 	fmt.Println("Next direction: \t\t", d.next())
-	fmt.Println( "opposite direction: \t", d.opposite())
+	//fmt.Println( "opposite direction: \t", d.opposite())
 	fmt.Println("Axis: \t\t\t\t\t", d.whichAxis(), )
 
 	fmt.Println()
