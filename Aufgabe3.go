@@ -10,8 +10,8 @@ import (
 func printColouredMessage(colour string, msg string) {
 	colours := map[string]string{
 		"Red" : "\033[31m",
-		"Yellow" : "\033[32m",
-		"Green" : "\033[33m",
+		"Green" : "\033[32m",
+		"Yellow" : "\033[33m",
 		"Blue" : "\033[34m",
 		"Purple" : "\033[35m",
 		"Cyan" : "\033[36m",
