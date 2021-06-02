@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// TrafficLight
+// TrafficLight V2
 /*
  every Trafficlight gets 3 Parameters
  The Direction of the Trafficlight
