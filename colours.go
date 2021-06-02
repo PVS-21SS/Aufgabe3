@@ -1,18 +1,18 @@
 package main
 
+//Definition Colour als enum
 type Colour int
 
+const (
+	red Colour = iota
+	green
+	yellow
+)
 
-// toString to Print the TrafficLight with the Colour Name
-func (c Colour) String() string {
-	col := []string{"Red", "Green", "Yellow"}
-	return col[c]
+func nextColour(colour Colour) Colour {
+	return (colour + 1) % (yellow + 1)
 }
 
-// Next Colour Function, based on the Index
-func (c Colour) next() Colour {
-	if c < 2 {
-		return c+1
-	}
-	return 0
+func (colour Colour) String() string {
+	return [...]string{"Red", "Green", "Yellow"}[colour]
 }

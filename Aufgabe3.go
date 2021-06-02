@@ -10,8 +10,8 @@ import (
 func printColouredMessage(colour string, msg string) {
 	colours := map[string]string{
 		"Red" : "\033[31m",
-		"Green" : "\033[32m",
-		"Yellow" : "\033[33m",
+		"Yellow" : "\033[32m",
+		"Green" : "\033[33m",
 		"Blue" : "\033[34m",
 		"Purple" : "\033[35m",
 		"Cyan" : "\033[36m",
@@ -23,40 +23,22 @@ func printColouredMessage(colour string, msg string) {
 
 
 func main() {
-	var d = Direction(0)
-	var c = Colour(0)
-	var cnt = directionCounter()
-
 	// Channel for the Colour, to sync the to TrafficLights of an Axis
-	axChanColour := make(chan Colour)
+	//axChanColour := make(chan Colour)
 	// Channel for the Axis, the Axis has two TrafficLights
 	// the two TrafficLights could be: North and South, with these Directions
-	axisDirectionChan := make(chan Axis, 1)
+	//axisDirectionChan := make(chan Axis, 1)
 	// quitChannel to Stop the Running threads
 	quitChannel := make(chan bool)
-
-	// initialisation of the TrafficLights
-	var t =  []TrafficLight{}
-	// cnt is the Counter for the directions
-	for i := 0; i < cnt; i++ {
-		// every TrafficLight, gets a Direction, a Colour and a Axis
-		t = append(t, TrafficLight{
-			dir: d,
-			col: c,
-			ax:  d.whichAxis()})
-		d = d.next()
-	}
-
-	// setting the Starting Axis, 0 means North and South
-	// 1 would be East and West
-	axisDirectionChan <- Axis(0)
 
 	printColouredMessage("Blue", "\nStarting the Intersection!\n")
 
 	// starting all trafficLights in their own Thread
-	for i := 0; i < cnt; i++ {
-		go t[i].run(axChanColour, axisDirectionChan, quitChannel)
-	}
+	go trafficlight(north, quitChannel)
+	go trafficlight(south, quitChannel)
+	go trafficlight(east, quitChannel)
+	go trafficlight(south, quitChannel)
+
 	// wait a while to Show the TrafficLights are working
 	time.Sleep(time.Millisecond * 1)
 

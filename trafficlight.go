@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // TrafficLight
 /*
@@ -10,64 +12,25 @@ import "fmt"
  The Axis, two Trafficlights build an Axis
 */
 
-type TrafficLight struct {
-	dir Direction
-	col Colour
-	ax  Axis
-}
+var nsChannel = make (chan Axis)
+var ewChannel = make (chan Axis)
+var sync = make (chan Colour)
 
-// toString function for the TrafficLight
-func (t TrafficLight) String() string {
-	return t.dir.String() + ": " + t.col.String()
-}
+func trafficlight(direction CardinalDirection, quitChannel chan bool) {
 
-// print TrafficLight and Colour in ANSI Colours
-func (t TrafficLight) printInColour() string {
-	colour := []string{"\033[31m", "\033[32m", "\033[33m"}
-
-	var retString = colour[t.col] + t.dir.String() + ": " + t.col.String()
-
-	return retString
-}
-
-func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis, quitChannel chan bool) {
-	fmt.Println(t.printInColour())
+	var trafficlightColour = Colour(green)
+	show(trafficlightColour, direction)
 	for {
+		show(trafficlightColour, direction)
 		select {
 		default:
-			// get current Axis
-			switch currentAx := <-axisDirectionChan; {
+			// if the Colour is Red, write the next Axis to the currentAxis Variable
+			if trafficlightColour == red {
 
-			//  Check if TrafficLight is Part of Axis
-			case currentAx == t.ax:
-				//fmt.Println(t.printInColour())
-				select {
-
-				// if axChanColour has a Value, run this Code
-				case tcol := <-axChanColour:
-					// change the own Colour to the one of axChanColour
-					t.col = tcol
-					// if the Colour is Red, write the next Axis to the currentAxis Variable
-					if t.col == Colour(0) {
-						currentAx = currentAx.next()
-					}
-
-					// write the currentAxis to the Channel
-					fmt.Println(t.printInColour())
-					axisDirectionChan <- currentAx
-
-				// if axChan has no Value, write the next Colour to the TrafficLight and to the axChanColour Channel
-				default:
-					t.col = t.col.next()
-					fmt.Println(t.printInColour())
-					axisDirectionChan <- currentAx
-					axChanColour <- t.col
-				}
-
-			default:
-				// if TrafficLight is not Part of the Axis, it returns the Axis into the Channel
-				axisDirectionChan <- currentAx
+				ewChannel <- ewAxis
+				switchAxis(nsAxis)
 			}
+			trafficlightColour = nextColour(trafficlightColour)
 
 		case <-quitChannel:
 			quitChannel <- true
@@ -76,3 +39,28 @@ func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis,
 
 	}
 }
+
+func show(colour Colour, direction CardinalDirection) {
+	colours := map[Colour]string{
+		red : "\033[31m",
+		green : "\033[32m",
+		yellow : "\033[33m"}
+
+	fmt.Println(colours[colour], direction, ":" , colour)
+}
+
+func getAxisChannel(direction CardinalDirection) chan Axis {
+	if direction == north || direction == east {
+		return nsChannel
+	}
+	return ewChannel
+}
+
+func switchAxis(direction CardinalDirection) chan Axis{
+	if direction == north || direction == south {
+		return nsChannel
+	}
+	return ewChannel
+}
+
+
