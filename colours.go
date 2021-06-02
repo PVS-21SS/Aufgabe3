@@ -1,18 +1,28 @@
 package main
 
+//
 type Colour int
 
+const (
+	RED    Colour = iota
+	GREEN         = 1
+	YELLOW        = 2
+)
 
-// toString to Print the TrafficLight with the Colour Name
-func (c Colour) String() string {
-	col := []string{"Red", "Green", "Yellow"}
-	return col[c]
+// NextColor Returns the next Colour
+func (c *Colour) NextColor() {
+	switch *c {
+	case RED:
+		*c = GREEN
+	case GREEN:
+		*c = YELLOW
+	case YELLOW:
+		*c = RED
+	}
 }
 
-// Next Colour Function, based on the Index
-func (c Colour) next() Colour {
-	if c < 2 {
-		return c+1
-	}
-	return 0
+// toString to Print the TrafficLight with the Colour Name
+func (c Colour) toString() string {
+	col := []string{"Red", "Green", "Yellow"}
+	return col[c]
 }

@@ -1,17 +1,16 @@
 package main
 
-type Axis int
-
-// toString to Print the Axis and to define which Axis exist
-func (a Axis) String() string {
-	axis := []string{"NorthSouth", "EastWest"}
-	return axis[a]
+/*
+	Mit diesem struct werden die Achsen definiert
+*/
+type Axis struct {
+	dirA    cardinalDirection
+	dirB    cardinalDirection
+	Channel chan cardinalDirection // Der Kommunikations Channel für diese Achse
 }
-
-// Next Axis Function, based on the Index
-func (a Axis) next() Axis {
-	if a < Axis((directionCounter()/2)-1) {
-		return a+1
-	}
-	return 0
+/*
+	Gibt einen String auf der Basis der beiden cardinalDirections zurück
+*/
+func (a Axis) ToString() string {
+	return a.dirA.toString() + a.dirB.toString()
 }

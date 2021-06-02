@@ -2,77 +2,55 @@ package main
 
 import "fmt"
 
-// TrafficLight V2
-/*
- every Trafficlight gets 3 Parameters
- The Direction of the Trafficlight
- The Colour of the Trafficlight(Only Parameter that will get changed)
- The Axis, two Trafficlights build an Axis
-*/
-
 type TrafficLight struct {
-	dir Direction
-	col Colour
+	dir cardinalDirection
 	ax  Axis
+	col Colour
 }
 
-// toString function for the TrafficLight
-func (t TrafficLight) String() string {
-	return t.dir.String() + ": " + t.col.String()
-}
-
-// print TrafficLight and Colour in ANSI Colours
-func (t TrafficLight) printInColour() string {
+// ShowColor Prints the direction and colour of the trafficlight
+func (t TrafficLight) ShowColor() string {
 	colour := []string{"\033[31m", "\033[32m", "\033[33m"}
 
-	var retString = colour[t.col] + t.dir.String() + ": " + t.col.String()
-
-	return retString
+	return colour[t.col] + t.dir.toString() + ":\t" + t.col.toString()
 }
 
-func (t TrafficLight) run(axChanColour chan Colour, axisDirectionChan chan Axis, quitChannel chan bool) {
-	fmt.Println(t.printInColour())
+func (t *TrafficLight) run(startAxis Axis, waitingAxis chan cardinalDirection) {
+
+	// if the axis of a trafficlight doesn't is not the start axis, wait for signal
+	if t.ax != startAxis {
+		_ = <-waitingAxis
+	}
+
 	for {
-		select {
-		default:
-			// get current Axis
-			switch currentAx := <-axisDirectionChan; {
+		fmt.Println(t.ShowColor())
 
-			//  Check if TrafficLight is Part of Axis
-			case currentAx == t.ax:
-				//fmt.Println(t.printInColour())
-				select {
+		// if the trafficlight colour is red switch to next axis
+		if t.col == 0 {
+			t.syncronise()
 
-				// if axChanColour has a Value, run this Code
-				case tcol := <-axChanColour:
-					// change the own Colour to the one of axChanColour
-					t.col = tcol
-					// if the Colour is Red, write the next Axis to the currentAxis Variable
-					if t.col == Colour(0) {
-						currentAx = currentAx.next()
-					}
+			waitingAxis <- t.dir
+			t.syncronise()
 
-					// write the currentAxis to the Channel
-					fmt.Println(t.printInColour())
-					axisDirectionChan <- currentAx
+			_ = <-waitingAxis
+			t.col.NextColor()
+		} else {
+			// Die Ampeln synchronisieren sich bevor sie zur nächsten Farbe schalten
+			//
+			t.syncronise()
 
-				// if axChan has no Value, write the next Colour to the TrafficLight and to the axChanColour Channel
-				default:
-					t.col = t.col.next()
-					fmt.Println(t.printInColour())
-					axisDirectionChan <- currentAx
-					axChanColour <- t.col
-				}
-
-			default:
-				// if TrafficLight is not Part of the Axis, it returns the Axis into the Channel
-				axisDirectionChan <- currentAx
-			}
-
-		case <-quitChannel:
-			quitChannel <- true
-			return
+			// Gibt die Farbe der Ampel aus und schaltet zur nächsten Farbe weiter
+			t.col.NextColor()
 		}
+	}
+}
 
+/*
+	Diese Funktion synchronisiert zwei TrafficLights
+*/
+func (t *TrafficLight) syncronise() {
+	select {
+	case _ = <-t.ax.Channel:
+	case t.ax.Channel <- t.dir:
 	}
 }

@@ -1,71 +1,43 @@
 package main
 
 import (
-	"fmt"
 	"time"
 )
 
-// helper Function
-// to print coloured Text and try to use Maps
-func printColouredMessage(colour string, msg string) {
-	colours := map[string]string{
-		"Red":    "\033[31m",
-		"Green":  "\033[32m",
-		"Yellow": "\033[33m",
-		"Blue":   "\033[34m",
-		"Purple": "\033[35m",
-		"Cyan":   "\033[36m",
-		"White":  "\033[37m",
-		"Reset":  "\033[0m",
-	}
-	fmt.Println(colours[colour] + msg + "\033[0m")
-}
-
 func main() {
-	var d = Direction(0)
-	var c = Colour(0)
-	var cnt = directionCounter()
+	// Erzeugen des Kommunikation Channels
+	NS := make(chan cardinalDirection)
+	EW := make(chan cardinalDirection)
+	wait := make(chan cardinalDirection)
 
-	// Channel for the Colour, to sync the to TrafficLights of an Axis
-	axChanColour := make(chan Colour)
-	// Channel for the Axis, the Axis has two TrafficLights
-	// the two TrafficLights could be: North and South, with these Directions
-	axisDirectionChan := make(chan Axis)
-	// quitChannel to Stop the Running threads
-	quitChannel := make(chan bool)
+	// Erzeugen der Himmelsrichtungen
+	north := cardinalDirection(0)
+	east := cardinalDirection(1)
+	south := cardinalDirection(2)
+	west := cardinalDirection(3)
 
-	// initialisation of the TrafficLights
-	var t = []TrafficLight{}
-	// cnt is the Counter for the directions
-	for i := 0; i < cnt; i++ {
-		// every TrafficLight, gets a Direction, a Colour and a Axis
-		t = append(t, TrafficLight{
-			dir: d,
-			col: c,
-			ax:  d.whichAxis()})
-		d = d.next()
-	}
+	// Erzeugen der Achsen
+	nsAxis := Axis{dirA: north, dirB: south, Channel: NS}
+	ewAxis := Axis{dirA: east, dirB: west, Channel: EW}
 
-	// setting the Starting Axis, 0 means North and South
-	// 1 would be East and West
-	select {
-	case axisDirectionChan <- Axis(0):
-	default :
-	}
+	// Definition der StartAxis
+	startAxis := nsAxis
 
-	printColouredMessage("Blue", "\nStarting the Intersection!\n")
+	// In diesem Fall rot
+	startColor := Colour(0)
 
-	// starting all trafficLights in their own Thread
-	for i := 0; i < cnt; i++ {
-		go t[i].run(axChanColour, axisDirectionChan, quitChannel)
-	}
-	// wait a while to Show the TrafficLights are working
-	time.Sleep(time.Millisecond * 1)
+	// Erzeugen der TrafficLights
+	northTraffic := TrafficLight{dir: north, ax: nsAxis, col: startColor}
+	eastTraffic := TrafficLight{dir: east, ax: ewAxis, col: startColor}
+	southTraffic := TrafficLight{dir: south, ax: nsAxis, col: startColor}
+	westTraffic := TrafficLight{dir: west, ax: ewAxis, col: startColor}
 
-	// Stop all goroutines
-	quitChannel <- true
+	// Erzeugen der Goroutinen
+	go northTraffic.run( startAxis, wait)
+	go eastTraffic.run( startAxis, wait)
+	go southTraffic.run( startAxis, wait)
+	go westTraffic.run( startAxis, wait)
 
-	// wait fot the goroutines to be done
-	<-quitChannel
-	printColouredMessage("Blue", "Intersection Stopped!")
+	// Wartet damit die Goroutinen nicht abgebrochen haben
+	time.Sleep(1 * time.Millisecond)
 }
