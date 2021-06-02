@@ -9,18 +9,17 @@ import (
 // to print coloured Text and try to use Maps
 func printColouredMessage(colour string, msg string) {
 	colours := map[string]string{
-		"Red" : "\033[31m",
-		"Green" : "\033[32m",
-		"Yellow" : "\033[33m",
-		"Blue" : "\033[34m",
-		"Purple" : "\033[35m",
-		"Cyan" : "\033[36m",
-		"White" : "\033[37m",
-		"Reset" : "\033[0m",
+		"Red":    "\033[31m",
+		"Green":  "\033[32m",
+		"Yellow": "\033[33m",
+		"Blue":   "\033[34m",
+		"Purple": "\033[35m",
+		"Cyan":   "\033[36m",
+		"White":  "\033[37m",
+		"Reset":  "\033[0m",
 	}
 	fmt.Println(colours[colour] + msg + "\033[0m")
 }
-
 
 func main() {
 	var d = Direction(0)
@@ -31,12 +30,12 @@ func main() {
 	axChanColour := make(chan Colour)
 	// Channel for the Axis, the Axis has two TrafficLights
 	// the two TrafficLights could be: North and South, with these Directions
-	axisDirectionChan := make(chan Axis, 1)
+	axisDirectionChan := make(chan Axis)
 	// quitChannel to Stop the Running threads
 	quitChannel := make(chan bool)
 
 	// initialisation of the TrafficLights
-	var t =  []TrafficLight{}
+	var t = []TrafficLight{}
 	// cnt is the Counter for the directions
 	for i := 0; i < cnt; i++ {
 		// every TrafficLight, gets a Direction, a Colour and a Axis
@@ -49,7 +48,10 @@ func main() {
 
 	// setting the Starting Axis, 0 means North and South
 	// 1 would be East and West
-	axisDirectionChan <- Axis(0)
+	select {
+	case axisDirectionChan <- Axis(0):
+	default :
+	}
 
 	printColouredMessage("Blue", "\nStarting the Intersection!\n")
 
@@ -64,6 +66,6 @@ func main() {
 	quitChannel <- true
 
 	// wait fot the goroutines to be done
-	<- quitChannel
+	<-quitChannel
 	printColouredMessage("Blue", "Intersection Stopped!")
 }
