@@ -5,39 +5,30 @@ import (
 )
 
 func main() {
-	// Erzeugen des Kommunikation Channels
-	NS := make(chan cardinalDirection)
-	EW := make(chan cardinalDirection)
-	wait := make(chan cardinalDirection)
 
-	// Erzeugen der Himmelsrichtungen
-	north := cardinalDirection(0)
-	east := cardinalDirection(1)
-	south := cardinalDirection(2)
-	west := cardinalDirection(3)
 
-	// Erzeugen der Achsen
-	nsAxis := Axis{dirA: north, dirB: south, Channel: NS}
-	ewAxis := Axis{dirA: east, dirB: west, Channel: EW}
+	nsAxisChan := make(chan CardinalDirection)
+	ewAxisChan := make(chan CardinalDirection)
+	wait := make(chan CardinalDirection)
 
-	// Definition der StartAxis
+
+	nsAxis := Axis{dirA: north, dirB: south, Channel: nsAxisChan}
+	ewAxis := Axis{dirA: east, dirB: west, Channel: ewAxisChan}
+
+
+	northTraffic := TrafficLight{dir: north, ax: nsAxis}
+	eastTraffic := TrafficLight{dir: east, ax: ewAxis}
+	southTraffic := TrafficLight{dir: south, ax: nsAxis}
+	westTraffic := TrafficLight{dir: west, ax: ewAxis}
+
+
 	startAxis := nsAxis
 
-	// In diesem Fall rot
-	startColor := Colour(0)
 
-	// Erzeugen der TrafficLights
-	northTraffic := TrafficLight{dir: north, ax: nsAxis, col: startColor}
-	eastTraffic := TrafficLight{dir: east, ax: ewAxis, col: startColor}
-	southTraffic := TrafficLight{dir: south, ax: nsAxis, col: startColor}
-	westTraffic := TrafficLight{dir: west, ax: ewAxis, col: startColor}
+	go northTraffic.run(startAxis, wait)
+	go eastTraffic.run(startAxis, wait)
+	go southTraffic.run(startAxis, wait)
+	go westTraffic.run(startAxis, wait)
 
-	// Erzeugen der Goroutinen
-	go northTraffic.run( startAxis, wait)
-	go eastTraffic.run( startAxis, wait)
-	go southTraffic.run( startAxis, wait)
-	go westTraffic.run( startAxis, wait)
-
-	// Wartet damit die Goroutinen nicht abgebrochen haben
 	time.Sleep(1 * time.Millisecond)
 }

@@ -3,54 +3,45 @@ package main
 import "fmt"
 
 type TrafficLight struct {
-	dir cardinalDirection
+	dir CardinalDirection
 	ax  Axis
 	col Colour
 }
 
-// ShowColor Prints the direction and colour of the trafficlight
-func (t TrafficLight) ShowColor() string {
+func (t TrafficLight) printInColour() string {
 	colour := []string{"\033[31m", "\033[32m", "\033[33m"}
-
-	return colour[t.col] + t.dir.toString() + ":\t" + t.col.toString()
+	return colour[t.col] + t.dir.String() + ":\t" + t.col.String()
 }
 
-func (t *TrafficLight) run(startAxis Axis, waitingAxis chan cardinalDirection) {
+func (t *TrafficLight) run(startAxis Axis, waitingAxis chan CardinalDirection) {
 
-	// if the axis of a trafficlight doesn't is not the start axis, wait for signal
 	if t.ax != startAxis {
-		_ = <-waitingAxis
+		<-waitingAxis
 	}
 
 	for {
-		fmt.Println(t.ShowColor())
+		fmt.Println(t.printInColour())
 
-		// if the trafficlight colour is red switch to next axis
 		if t.col == 0 {
-			t.syncronise()
+			t.synchronize()
 
 			waitingAxis <- t.dir
-			t.syncronise()
+			t.synchronize()
 
-			_ = <-waitingAxis
-			t.col.NextColor()
+			<-waitingAxis
+			t.col.nextColour()
 		} else {
-			// Die Ampeln synchronisieren sich bevor sie zur nächsten Farbe schalten
-			//
-			t.syncronise()
 
-			// Gibt die Farbe der Ampel aus und schaltet zur nächsten Farbe weiter
-			t.col.NextColor()
+			t.synchronize()
+
+			t.col.nextColour()
 		}
 	}
 }
 
-/*
-	Diese Funktion synchronisiert zwei TrafficLights
-*/
-func (t *TrafficLight) syncronise() {
+func (t *TrafficLight) synchronize() {
 	select {
-	case _ = <-t.ax.Channel:
+	case <-t.ax.Channel:
 	case t.ax.Channel <- t.dir:
 	}
 }

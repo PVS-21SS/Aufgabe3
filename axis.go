@@ -1,16 +1,11 @@
 package main
 
-/*
-	Mit diesem struct werden die Achsen definiert
-*/
 type Axis struct {
-	dirA    cardinalDirection
-	dirB    cardinalDirection
-	Channel chan cardinalDirection // Der Kommunikations Channel für diese Achse
+	dirA    CardinalDirection
+	dirB    CardinalDirection
+	Channel chan CardinalDirection
 }
-/*
-	Gibt einen String auf der Basis der beiden cardinalDirections zurück
-*/
-func (a Axis) ToString() string {
-	return a.dirA.toString() + a.dirB.toString()
+
+func (a Axis) String() string {
+	return a.dirA.String() + a.dirB.String()
 }

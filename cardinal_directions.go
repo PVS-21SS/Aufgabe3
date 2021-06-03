@@ -1,12 +1,17 @@
 package main
 
-/*
-	Mit diesem struct werden die Himmelsrichtungen abgebildet
-*/
-type cardinalDirection int
+type CardinalDirection int
+const (
+	north = iota
+	east
+	south
+	west
+)
 
-//returns the direction as a string
-func (d cardinalDirection) toString() string {
+func (d CardinalDirection) String() string {
 	dir := []string{"North", "East", "South", "West"}
+	if int(d) >= cap(dir) {
+		d = CardinalDirection(int(d) - cap(dir))
+	}
 	return dir[d]
 }
