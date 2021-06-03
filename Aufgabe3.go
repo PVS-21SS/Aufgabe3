@@ -23,7 +23,7 @@ func main() {
 	//define start axis
 	startAxis := nsAxis
 
-	//start the run method of a trafficlight as a goroutine
+	//start the run method of a trafficlight as a goroutine, with the startAxis and the waitChannel
 	go northTraffic.run(startAxis, wait)
 	go eastTraffic.run(startAxis, wait)
 	go southTraffic.run(startAxis, wait)

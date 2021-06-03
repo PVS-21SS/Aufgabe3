@@ -27,8 +27,7 @@ func (t *TrafficLight) run(startAxis Axis, waitingAxis chan CardinalDirection) {
 	for {
 		fmt.Println(t.printInColour())
 
-		//if the colour of the trafficlight is RED, the trafficlight synchronises with the other trafficlights and waits
-		//if the colour of the trafficlight is not RED, the trafficlight synchronises with the other trafficlights and changes its colour
+		// if Color is Red, change Axis and Colour to next Colour
 		if t.col == RED {
 			t.synchronize()
 
@@ -38,7 +37,7 @@ func (t *TrafficLight) run(startAxis Axis, waitingAxis chan CardinalDirection) {
 			<-waitingAxis
 			t.col.nextColour()
 		} else {
-
+			// change Colour to the Point its Red
 			t.synchronize()
 
 			t.col.nextColour()
@@ -46,6 +45,7 @@ func (t *TrafficLight) run(startAxis Axis, waitingAxis chan CardinalDirection) {
 	}
 }
 
+// Sync the Axis over the Axis Channel
 func (t *TrafficLight) synchronize() {
 	select {
 	case <-t.ax.Channel:
