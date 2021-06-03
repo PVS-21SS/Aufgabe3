@@ -1,17 +1,15 @@
 package main
 
 type CardinalDirection int
+
 const (
-	north = iota
-	east
-	south
-	west
+	NORTH = iota
+	EAST
+	SOUTH
+	WEST
 )
 
+//returns a String of the cardinal Direction
 func (d CardinalDirection) String() string {
-	dir := []string{"North", "East", "South", "West"}
-	if int(d) >= cap(dir) {
-		d = CardinalDirection(int(d) - cap(dir))
-	}
-	return dir[d]
+	return [...]string{"North", "East", "South", "West"}[d]
 }

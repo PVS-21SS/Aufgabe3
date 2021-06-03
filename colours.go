@@ -1,6 +1,5 @@
 package main
 
-
 type Colour int
 
 const (
